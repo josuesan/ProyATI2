@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Products</h1>
+
+<table class="table table-border">
+  <thead>
+    <tr>
+      <th>Foto</th>
+      <th>Nombre</th>
+      <th>Descripcion</th>
+      <th>Categoria</th>
+      <th>Precio</th>
+      <th>Vendido</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody class="cuerpo">
+
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Product', new_product_path %>
+
+<script type="text/javascript">
+function listar(productos) {  
+  tam = productos.length
+
+  for (i = 0; i < tam; i++) {
+      $(".cuerpo").append("<tr>"); 
+      var txt2 = $("<td></td>").text(productos[i].nombre);  
+      $(".cuerpo").append(txt2);
+      var txt2 = $("<td></td>").text(productos[i].precio);
+      $(".cuerpo").append(txt2);
+      var txt2 = $("<td></td>").text(productos[i].foto);
+      $(".cuerpo").append(txt2);
+      var txt2 = $("<td></td>").text(productos[i].categoria);
+      $(".cuerpo").append(txt2);
+      var txt2 = $("<td></td>").text(productos[i].descripcion);
+      $(".cuerpo").append(txt2);
+      var txt2 = $("<td></td>").text(productos[i].vendido);
+      $(".cuerpo").append(txt2);
+      $(".cuerpo").append("<tr>"); 
+  }
+
+};
+  $(document).ready(function() {
+  listar(Get_all_products());
+}); 
+</script>
