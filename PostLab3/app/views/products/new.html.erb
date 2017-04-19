@@ -1,5 +1,6 @@
 <h1>New Product</h1>
-
+<form  id="formulario">
 <%= render 'form'%>
-
+  <button type="submit" class="btn btn-default" id="btn_enviar" onclick="Add_product()">Submit</button>
+</form>
 <%= link_to 'Back', products_path %>

@@ -41,6 +41,7 @@ function Get_product(id){
 		url: 'http://localhost:5000/listar/'+id,
 		contentType: 'application/json',
 		crossDomain : "true",
+		async: false, 
 		type : 'GET',
 		success: function(response) {
 			data=JSON.parse(response)
@@ -49,8 +50,8 @@ function Get_product(id){
 			}
 			else{
 				console.log(response);
-			 	console.log(data.nombre);   // (o el campo que necesites)	
-			}
+			 	console.log(data);   // (o el campo que necesites)	
+			 	mostrar(data);			}
 
 
 		},
@@ -81,72 +82,9 @@ function Delete_product(id){
 	});
 };
 
+
+
 function Add_product(){
-var hola = JSON.stringify({"nombre": "camisa", "precio": 150,"foto": "camisa.jpg", "descripcion":"descripcion","categoria": "categoria", "vendido":1 });
-var misdatos="nombre="+"reemail"+"&precio="+150+"&foto="+"tra2"+"&descripcion="+"reemail"+"&categoria="+"recontra1"+"&vendido="+1;	
-	$.ajax({
-		url: 'http://localhost:5000/crear',
-		contentType: 'application/json',
-		crossDomain : "true",
-		async: false, 
-		data: misdatos,
-		type : 'POST',
-		success: function(response) {
-			data=JSON.parse(response)
-			if (data.error==false) {
-				console.log("Producto creado");
-			}
-
-
-		},
-		error: function(error) {}
-	});
-};
-
-
- 
-
-
-function listar(productos) {	
-	tam = productos.length;
-
-	for (i = 0; i < tam; i++) {
-			$("p").append(data[i].nombre);
-			$("p").append(data[i].precio);
-			$("p").append(data[i].foto);
-			$("p").append(data[i].categoria);
-			$("p").append(data[i].descripcion);
-			$("p").append(data[i].vendido);
-		;
-	}
-
-};
-
-function limpiaForm(miForm) {
-// recorremos todos los campos que tiene el formulario
-$(":input", miForm).each(function() {
-var type = this.type;
-var tag = this.tagName.toLowerCase();
-//limpiamos los valores de los campos…
-if (type == "text" || type == "password" || tag == "textarea")
-this.value = "";
-// excepto de los checkboxes y radios, le quitamos el checked
-// pero su valor no debe ser cambiado
-else if (type == "checkbox" || type == "radio")
-this.checked = false;
-// los selects le ponesmos el indice a -
-else if (tag == "select")
-this.selectedIndex = -1;
-});
-}
-
-
-$(document).ready(function() {
-	index = 0;
-	var i = false;
-	///Get_all_products();
-	//Get_product(5);
-	$("#btn_enviar").click(function(){
 		console.log($("#formulario").serialize());
 		var x =$("#formulario").serialize();
     $.ajax({
@@ -177,8 +115,80 @@ $(document).ready(function() {
 			}
          });
 
-    	return i; // Evitar ejecutar el submit del formulario.
- 	});
+    	//return i; // Evitar ejecutar el submit del formulario.
+ 	};
+
+ function Editar_product(id){
+		console.log($("#formulario").serialize());
+		var x =$("#formulario").serialize();
+	    $.ajax({
+	          url: 'http://localhost:5000/editar/'+id,
+				crossDomain : "true",
+				async: false, 
+				data: x,
+				type : 'POST',
+	            // Adjuntar los campos del formulario enviado.
+	           success: function(response)
+	           {
+	                // Mostrar la respuestas del script PHP.
+	               data=JSON.parse(response)
+					if (data.error==false) {
+						console.log(data);
+						
+						alert("producto editado");
+					}
+					else{
+						limpiaForm($("#formulario"));
+						alert("producto no editado , vuelva intentar");
+					}
+	           },
+				error: function(error) {
+					console.log("hola");
+				}
+	    });
+	};
+
+
+function listar(productos) {	
+	var tam = productos.length;
+
+	for (i = 0; i < tam; i++) {
+			$("p").append(data[i].nombre);
+			$("p").append(data[i].precio);
+			$("p").append(data[i].foto);
+			$("p").append(data[i].categoria);
+			$("p").append(data[i].descripcion);
+			$("p").append(data[i].vendido);
+		;
+	}
+
+};
+
+function limpiaForm(miForm) {
+// recorremos todos los campos que tiene el formulario
+	$(":input", miForm).each(function() {
+		var type = this.type;
+		var tag = this.tagName.toLowerCase();
+		//limpiamos los valores de los campos…
+		if (type == "text" || type == "password" || tag == "textarea")
+			this.value = "";
+		// excepto de los checkboxes y radios, le quitamos el checked
+		// pero su valor no debe ser cambiado
+		else if (type == "checkbox" || type == "radio")
+			this.checked = false;
+		// los selects le ponesmos el indice a -
+		else if (tag == "select")
+			this.selectedIndex = -1;
+	});
+};
+
+
+$(document).ready(function(){
+	var index = 0;
+	///Get_all_products();
+	//Get_product(5);
+	//$("#btn_enviar").click(Add_product());
+	//$("#btn_edit_enviar").click(Editar_product());
 	//Add_product();
 	console.log(index);
 }); 

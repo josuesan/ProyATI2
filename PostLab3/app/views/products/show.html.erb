@@ -17,29 +17,39 @@
   </tbody>
 </table>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
+
 <%= link_to 'Back', products_path %>
 
 <script type="text/javascript">
-function mostrar(producto) {  
+  function mostrar(producto) {  
 
-      $(".cuerpo").append("<tr>"); 
-      var txt2 = $("<td></td>").text(producto.nombre);  
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(producto.precio);
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(producto.foto);
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(producto.categoria);
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(producto.descripcion);
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(producto.vendido);
-      $(".cuerpo").append(txt2);
-      $(".cuerpo").append("<tr>"); 
+        $(".cuerpo").append("<tr>"); 
+        var txt2 = $("<td></td>").text(producto.nombre);  
+        $(".cuerpo").append(txt2);
+        var txt2 = $("<td></td>").text(producto.precio);
+        $(".cuerpo").append(txt2);
+        var txt2 = $("<td></td>").text(producto.foto);
+        $(".cuerpo").append(txt2);
+        var txt2 = $("<td></td>").text(producto.categoria);
+        $(".cuerpo").append(txt2);
+        var txt2 = $("<td></td>").text(producto.descripcion);
+        $(".cuerpo").append(txt2);
+        var txt2 = $("<td></td>").text(producto.vendido);
+        $(".cuerpo").append(txt2);
+        $(".cuerpo").append("<tr>"); 
 
-};
+  };
+  function buscarID(){
+    var pathname = window.location.pathname;
+    console.log(pathname);
+    var vars = pathname.split("/");
+    console.log(vars[2]);
+    return vars[2];
+  };
   $(document).ready(function() {
-  mostrar(Get_product(1));
-}); 
+    var ID = buscarID();
+    Get_product(ID);
+
+
+  }); 
 </script>
