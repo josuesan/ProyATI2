@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = Product.new
+    #@product = Product.new
   end
 
   # GET /products/1/edit
@@ -24,17 +24,17 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(product_params)
+    #@product = Product.new(product_params)
 
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to products, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
-    end
+    #respond_to do |format|
+      #if @product.save
+        #format.html { redirect_to products, notice: 'Product was successfully created.' }
+        #format.json { render :show, status: :created, location: @product }
+      #else
+        #format.html { render :new }
+        #format.json { render json: @product.errors, status: :unprocessable_entity }
+      #end
+    #end
   end
 
   # PATCH/PUT /products/1

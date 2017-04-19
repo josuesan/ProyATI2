@@ -81,13 +81,15 @@ function Delete_product(id){
 	});
 };
 
-/*function Add_product(nombre,precio,foto,descripcion,categoria,vendido){
-
+function Add_product(){
+var hola = JSON.stringify({"nombre": "camisa", "precio": 150,"foto": "camisa.jpg", "descripcion":"descripcion","categoria": "categoria", "vendido":1 });
+var misdatos="nombre="+"reemail"+"&precio="+150+"&foto="+"tra2"+"&descripcion="+"reemail"+"&categoria="+"recontra1"+"&vendido="+1;	
 	$.ajax({
 		url: 'http://localhost:5000/crear',
 		contentType: 'application/json',
 		crossDomain : "true",
-		data: JSON.stringify({"nombre": nombre, "precio": precio,"foto": foto, "descripcion":descripcion,"categoria": categoria, "vendido":vendido }),
+		async: false, 
+		data: misdatos,
 		type : 'POST',
 		success: function(response) {
 			data=JSON.parse(response)
@@ -99,10 +101,14 @@ function Delete_product(id){
 		},
 		error: function(error) {}
 	});
-};*/
+};
+
+
+ 
+
 
 function listar(productos) {	
-	tam = productos.length
+	tam = productos.length;
 
 	for (i = 0; i < tam; i++) {
 			$("p").append(data[i].nombre);
@@ -116,10 +122,63 @@ function listar(productos) {
 
 };
 
+function limpiaForm(miForm) {
+// recorremos todos los campos que tiene el formulario
+$(":input", miForm).each(function() {
+var type = this.type;
+var tag = this.tagName.toLowerCase();
+//limpiamos los valores de los campos…
+if (type == "text" || type == "password" || tag == "textarea")
+this.value = "";
+// excepto de los checkboxes y radios, le quitamos el checked
+// pero su valor no debe ser cambiado
+else if (type == "checkbox" || type == "radio")
+this.checked = false;
+// los selects le ponesmos el indice a -
+else if (tag == "select")
+this.selectedIndex = -1;
+});
+}
+
+
 $(document).ready(function() {
 	index = 0;
+	var i = false;
 	///Get_all_products();
 	//Get_product(5);
-	//Add_product("camisa",150,"camisa.jpg","es una camisa","camisas",4);
+	$("#btn_enviar").click(function(){
+		console.log($("#formulario").serialize());
+		var x =$("#formulario").serialize();
+    $.ajax({
+          url: 'http://localhost:5000/crear',
+			crossDomain : "true",
+			async: false, 
+			data: x,
+			type : 'POST',
+            // Adjuntar los campos del formulario enviado.
+           success: function(response)
+           {
+                // Mostrar la respuestas del script PHP.
+               data=JSON.parse(response)
+				if (data.error==false) {
+					console.log(data);
+					//$("#Formulario")[0].reset();
+					limpiaForm($("#formulario"));
+					alert("producto creado");
+				}
+				else{
+					limpiaForm($("#formulario"));
+					alert("producto no creado , vuelva intentar");
+				}
+           },
+			error: function(error) {
+				console.log("hola");
+				var i = false;
+			}
+         });
+
+    	return i; // Evitar ejecutar el submit del formulario.
+ 	});
+	//Add_product();
 	console.log(index);
 }); 
