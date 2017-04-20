@@ -1,34 +1,47 @@
 <p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <h1 class="titulo"></h1>
+  </div>
+  <div class="row">
+    <img src="" class="imagen">   
+  </div>
+  <div class="row">
+    <p class="descripcion"></p>  
+  </div>
+  <div class="row">
+  <p class="precio"></p> 
+  </div>
+  <div class="row">
+  <p class="vendido"></p> 
+  </div>
+    <button class="btn btn-default"><%= link_to 'Editar', edit_product_path %></button> 
+    <button class="btn btn-default"><%= link_to 'Regresar', products_path %></button> 
+</div>
 
-<p>
-  <strong>Foto:</strong>
-  <%= @product.foto %>
-</p>
 
-<p>
-  <strong>Nombre:</strong>
-  <%= @product.nombre %>
-</p>
+<script type="text/javascript">
+  function mostrar(producto) {  
 
-<p>
-  <strong>Descripcion:</strong>
-  <%= @product.descripcion %>
-</p>
+        $(".titulo").text(producto.nombre);  
+        $(".imagen").attr('src',producto.foto);
+        $(".descripcion").text(producto.descripcion);
+        $(".precio").text(producto.precio);
+        $(".vendido").text(producto.vendido);
 
-<p>
-  <strong>Categoria:</strong>
-  <%= @product.categoria %>
-</p>
 
-<p>
-  <strong>Precio:</strong>
-  <%= @product.precio %>
-</p>
+  };
+  function buscarID(){
+    var pathname = window.location.pathname;
+    console.log(pathname);
+    var vars = pathname.split("/");
+    console.log(vars[2]);
+    return vars[2];
+  };
+  $(document).ready(function() {
+    var ID = buscarID();
+    Get_product(ID);
 
-<p>
-  <strong>Vendido:</strong>
-  <%= @product.vendido %>
-</p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+  }); 
+</script>

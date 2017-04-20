@@ -1,6 +1,88 @@
-<h1>Editing Product</h1>
+<h1>Editar Producto</h1>
+<div class="container">
+  <div class="row">
+    <form  id="formulario">
+      <div class="form-group ">
+        <label for="Foto">Foto:</label>
+        <input type="text" class="form-control" id="foto" name="foto" required>
+      </div>
+      <div class="form-group">
+        <label for="pwd">nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+      </div>
+      <div class="form-group">
+        <label for="descripcion">descripcion :</label>
+        <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+      </div>
+      <div class="form-group">
+        <label for="categoria">categoria:</label>
+        <input type="text" class="form-control" id="categoria" name="categoria" required>
+      </div>
+      <div class="form-group">
+        <label for="precio">precio</label>
+        <input type="text" class="form-control" id="precio" name="precio" required>
+      </div>
+      <div class="form-group">
+        <label for="vendido">vendido:</label>
+        <input type="text" class="form-control" id="vendido" name="vendido" required>
+      </div>
+      <button type="submit" class="btn btn-default" id="btn_edit_enviar" >Enviar</button>
+    </form>
+    <button class="btn btn-default"><%= link_to 'Back', products_path %></button> 
+  </div>
+</div>
 
-<%= render 'form', product: @product %>
 
-<%= link_to 'Show', @product %> |
-<%= link_to 'Back', products_path %>
+<script type="text/javascript">
+
+  function buscarID(){
+    var pathname = window.location.pathname;
+    console.log(pathname);
+    var vars = pathname.split("/");
+    console.log(vars[2]);
+    return vars[2];
+  };
+
+  function Get_product(id){
+	
+	$.ajax({
+		url: 'http://localhost:5000/listar/'+id,
+		contentType: 'application/json',
+		crossDomain : "true",
+		async: false, 
+		type : 'GET',
+		success: function(response) {
+			data=JSON.parse(response)
+			if (data.error==true) {
+				console.log("error");
+			}
+			else{
+				console.log(response);
+			 	console.log(data);   // (o el campo que necesites)	
+			 	aplicar(data);			}
+
+
+		},
+		error: function(error) {}
+	});
+};
+
+function aplicar(producto){
+    $("#foto").val(producto.foto);
+    $("#nombre").val(producto.nombre);
+    $("#descripcion").val(producto.descripcion);
+    $("#categoria").val(producto.categoria);
+    $("#precio").val(producto.precio);
+    $("#vendido").val(producto.vendido);
+  };
+
+  $(document).ready(function() {
+    var ID = buscarID();
+    Get_product(ID);
+    $("#btn_edit_enviar").click(function(){
+  		Editar_product(ID);
+	});
+
+
+  }); 
+</script>

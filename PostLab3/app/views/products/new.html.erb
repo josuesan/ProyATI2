@@ -1,5 +1,12 @@
-<h1>New Product</h1>
+<h1>Agregar nuevo producto</h1>
+<div class="container">
+	<div class="row">
+		<form  id="formulario">
+			<%= render 'form'%>
+			<button type="submit" class="btn btn-default" id="btn_enviar" onclick="Add_product()">Enviar</button>
+		</form>
+		<button class="btn btn-default"><%= link_to 'Regresar', products_path %></button>	
+	</div>
+</div>
 
-<%= render 'form', product: @product %>
 
-<%= link_to 'Back', products_path %>

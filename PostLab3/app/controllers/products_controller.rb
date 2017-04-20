@@ -5,7 +5,16 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     #@products = Product.all
+    if (user_signed_in?)
+      print (current_user.nombre)
+      printf()
+      print (current_user.id)
+      usuario= User.find(1)
+      print (usuario.username)
+      print (usuario.nombre)
+    end
   end
+    
 
   # GET /products/1
   # GET /products/1.json
@@ -14,8 +23,9 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = Product.new
+    #@product = Product.new
   end
+
 
   # GET /products/1/edit
   def edit
@@ -24,17 +34,17 @@ class ProductsController < ApplicationController
   # POST /products
   # POST /products.json
   def create
-    @product = Product.new(product_params)
+    #@product = Product.new(product_params)
 
-    respond_to do |format|
-      if @product.save
-        format.html { redirect_to products, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @product }
-      else
-        format.html { render :new }
-        format.json { render json: @product.errors, status: :unprocessable_entity }
-      end
-    end
+    #respond_to do |format|
+      #if @product.save
+        #format.html { redirect_to products, notice: 'Product was successfully created.' }
+        #format.json { render :show, status: :created, location: @product }
+      #else
+        #format.html { render :new }
+        #format.json { render json: @product.errors, status: :unprocessable_entity }
+      #end
+    #end
   end
 
   # PATCH/PUT /products/1
@@ -64,7 +74,7 @@ class ProductsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_product
-      @product = Product.find(params[:id])
+      #@product = Product.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

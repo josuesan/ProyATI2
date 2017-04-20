@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  validates :email, :presence => {:message => ": el email no debe estar vacío."}, uniqueness: true
+  validates :email, :presence => {:message => ": el email no debe estar vacío."}
   validates :username, :presence => {:message => ": el nombre de usuario no debe estar vacío."}, uniqueness: true
   validates :password, :presence => {:message => ": la contraseña no debe estar vacía."}
   validates :password_confirmation, :presence => {:message => ": la confirmación de su contraseña no debe estar vacía."}

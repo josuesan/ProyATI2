@@ -1,4 +1,80 @@
-<h1>¡POST LABORATORIO 3 ATI!</h1>
+<h1>¡ Bienvenido a 3J' STORE !</h1>
 <% if user_signed_in? %>
 	<h2>Bienvenido <%= current_user.nombre %> </h2>
 <%end%>
+<div class="container">
+	<div class="row destacado">
+	</div>
+</div>
+
+<script>
+	function listFav (productos){
+		var tam = productos.length ;
+		var aux=0;
+	    for (i = 0; i < tam; i++) {
+	    	console.log("producto con ventas de :"+productos[i].vendido);
+	    	if (productos[i].vendido>5) {
+
+	    		var fila = $('<div/>', {
+			    'class' : 'col-sm-6 col-md-6 col-lg-4',
+			    'id'    : 'Fila_' + i
+				});
+
+	    		$(".destacado").append(fila);
+
+	    		var panelTotal = $('<div/>', {
+			    'class' : 'panel panel-default panelProduct',
+			    'id'    : 'panel-id_' + i
+				});
+
+		      	$("#Fila_"+i).append(panelTotal);
+
+		      	var panelHead = $('<div/>', {
+				    'class' : 'panel-heading',
+				    'id'    : 'panelhead-id_' + i
+				});
+		      	var panelbody = $('<div/>', {
+				    'class' : 'panel-body',
+				    'id'    : 'panelbody-id_' + i
+				});
+		      	var panelfooter = $('<div/>', {
+				    'class' : 'panel-footer',
+				    'id'    : 'panelfooter-id_' + i
+				});
+
+				$("#panel-id_"+i).append(panelHead);
+				$("#panel-id_"+i).append(panelbody);
+				$("#panel-id_"+i).append(panelfooter);
+
+		      	panelHead = $("<h4></h4>").text(productos[i].nombre);
+		      	$("#panelhead-id_"+i).append(panelHead);
+		      	
+		      	// agregar imagen al panel body
+		        panelbody = $('<img/>', {
+				    'class' : 'image',
+				    'id'    : 'image_' + i,
+				    'src'   : productos[i].foto
+				});
+		      	$("#panelbody-id_"+i).append(panelbody);
+
+		      	var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
+		      	$("#panelfooter-id_"+i).append(precio);
+
+		      	panelfooter = $('<a/>', {
+				    'href'    : '/products/' + productos[i].id
+				});
+				panelfooter.text("Ver mas");
+		      	$("#panelfooter-id_"+i).append(panelfooter);
+
+		      	if (aux >6) {
+		      		break;
+				}
+				aux++;
+	    	}
+
+	    }    
+	};
+	$(document).ready(function() {
+    	Get_Favorite_Products();
+	});
+</script>
