@@ -42,8 +42,8 @@ function sesion_api(){
 						data: x,
 						type : 'POST',
 						success: function(response) {
-							x=JSON.parse(response)
-							console.log(x)
+							x=JSON.parse(response);
+							console.log(x);
 							$.ajax({
 								url: '/users/registroapi',
 								async: false, 
