@@ -25,10 +25,6 @@ function Get_all_products(){
 		type : 'GET',
 		success: function(response) {
 			data=JSON.parse(response)
-			/*for(var i in data) {
-
-			    console.log(data[i].nombre);   // (o el campo que necesites)
-			}*/
 			listar(data);
 		},
 		error: function(error) {}
