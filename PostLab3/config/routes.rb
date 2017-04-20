@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'prodcarts/index'
+
   resources :products
   devise_for :users
   root 'welcome#index'
