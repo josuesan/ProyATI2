@@ -5,7 +5,16 @@ class ProductsController < ApplicationController
   # GET /products.json
   def index
     #@products = Product.all
+    if (user_signed_in?)
+      print (current_user.nombre)
+      printf()
+      print (current_user.id)
+      usuario= User.find(1)
+      print (usuario.username)
+      print (usuario.nombre)
+    end
   end
+    
 
   # GET /products/1
   # GET /products/1.json
