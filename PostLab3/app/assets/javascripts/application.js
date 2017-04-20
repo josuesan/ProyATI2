@@ -44,10 +44,6 @@ function Get_all_products_categoria(){
 		type : 'GET',
 		success: function(response) {
 			data=JSON.parse(response)
-			/*for(var i in data) {
-
-			    console.log(data[i].nombre);   // (o el campo que necesites)
-			}*/
 			Mostrar_Categoria(data);
 		},
 		error: function(error) {}
@@ -63,10 +59,7 @@ function Get_Favorite_Products(){
 		type : 'GET',
 		success: function(response) {
 			data=JSON.parse(response)
-			/*for(var i in data) {
 
-			    console.log(data[i].nombre);   // (o el campo que necesites)
-			}*/
 			listFav(data);
 		},
 		error: function(error) {}
@@ -84,12 +77,12 @@ function Get_product(id){
 		success: function(response) {
 			data=JSON.parse(response)
 			if (data.error==true) {
-				//console.log("error");
+				
 			}
 			else{
-				//console.log(response);
-			 	//console.log(data);   // (o el campo que necesites)	
-			 	mostrar(data);			}
+				
+			 	mostrar(data);			
+			}
 
 
 		},
@@ -107,11 +100,10 @@ function Delete_product(id){
 		success: function(response) {
 			data=JSON.parse(response)
 			if (data.error==true) {
-				//console.log("error");
+			
 			}
 			else{
-				//error false enviar mensaje afirmativo
-			 	//console.log(data.nombre);   // (o el campo que necesites)	
+	
 			}
 			return data;
 
@@ -137,7 +129,7 @@ function Add_product(){
 
                data=JSON.parse(response)
 				if (data.error==false) {
-					//console.log(data);
+					
 					limpiaForm($("#formulario"));
 					alert("producto creado");
 				}
@@ -147,7 +139,7 @@ function Add_product(){
 				}
            },
 			error: function(error) {
-				//console.log("hola");
+				
 				var i = false;
 			}
          });
@@ -167,9 +159,9 @@ function Add_product(){
 	           {
 	                // Mostrar la respuestas del script PHP.
 	               data=JSON.parse(response)
-	               //console.log(data);
+	              
 					if (data.id==id) {
-						//console.log(data);
+						
 						
 						alert("producto editado");
 					}
@@ -179,7 +171,7 @@ function Add_product(){
 					}
 	           },
 				error: function(error) {
-					//console.log("hola");
+					
 				}
 	    });
 	};
