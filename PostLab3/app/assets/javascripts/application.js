@@ -25,11 +25,49 @@ function Get_all_products(){
 		type : 'GET',
 		success: function(response) {
 			data=JSON.parse(response)
-			for(var i in data) {
+			/*for(var i in data) {
 
 			    console.log(data[i].nombre);   // (o el campo que necesites)
-			}
+			}*/
 			listar(data);
+		},
+		error: function(error) {}
+	});
+};
+
+function Get_all_products_categoria(){
+	
+	$.ajax({
+		url: 'http://localhost:5000/listar',
+		contentType: 'application/json',
+		crossDomain : "true",
+		type : 'GET',
+		success: function(response) {
+			data=JSON.parse(response)
+			/*for(var i in data) {
+
+			    console.log(data[i].nombre);   // (o el campo que necesites)
+			}*/
+			Mostrar_Categoria(data);
+		},
+		error: function(error) {}
+	});
+};
+
+function Get_Favorite_Products(){
+	
+	$.ajax({
+		url: 'http://localhost:5000/listar',
+		contentType: 'application/json',
+		crossDomain : "true",
+		type : 'GET',
+		success: function(response) {
+			data=JSON.parse(response)
+			/*for(var i in data) {
+
+			    console.log(data[i].nombre);   // (o el campo que necesites)
+			}*/
+			listFav(data);
 		},
 		error: function(error) {}
 	});
@@ -46,11 +84,11 @@ function Get_product(id){
 		success: function(response) {
 			data=JSON.parse(response)
 			if (data.error==true) {
-				console.log("error");
+				//console.log("error");
 			}
 			else{
-				console.log(response);
-			 	console.log(data);   // (o el campo que necesites)	
+				//console.log(response);
+			 	//console.log(data);   // (o el campo que necesites)	
 			 	mostrar(data);			}
 
 
@@ -69,11 +107,11 @@ function Delete_product(id){
 		success: function(response) {
 			data=JSON.parse(response)
 			if (data.error==true) {
-				console.log("error");
+				//console.log("error");
 			}
 			else{
 				//error false enviar mensaje afirmativo
-			 	console.log(data.nombre);   // (o el campo que necesites)	
+			 	//console.log(data.nombre);   // (o el campo que necesites)	
 			}
 			return data;
 
@@ -96,11 +134,10 @@ function Add_product(){
             // Adjuntar los campos del formulario enviado.
            success: function(response)
            {
-                // Mostrar la respuestas del script PHP.
+
                data=JSON.parse(response)
 				if (data.error==false) {
-					console.log(data);
-					//$("#Formulario")[0].reset();
+					//console.log(data);
 					limpiaForm($("#formulario"));
 					alert("producto creado");
 				}
@@ -110,12 +147,10 @@ function Add_product(){
 				}
            },
 			error: function(error) {
-				console.log("hola");
+				//console.log("hola");
 				var i = false;
 			}
          });
-
-    	//return i; // Evitar ejecutar el submit del formulario.
  	};
 
  function Editar_product(id){
@@ -132,8 +167,9 @@ function Add_product(){
 	           {
 	                // Mostrar la respuestas del script PHP.
 	               data=JSON.parse(response)
-					if (data.error==false) {
-						console.log(data);
+	               //console.log(data);
+					if (data.id==id) {
+						//console.log(data);
 						
 						alert("producto editado");
 					}
@@ -143,7 +179,7 @@ function Add_product(){
 					}
 	           },
 				error: function(error) {
-					console.log("hola");
+					//console.log("hola");
 				}
 	    });
 	};
@@ -184,11 +220,11 @@ function limpiaForm(miForm) {
 
 
 $(document).ready(function(){
-	var index = 0;
+	//var index = 0;
 	///Get_all_products();
 	//Get_product(5);
 	//$("#btn_enviar").click(Add_product());
 	//$("#btn_edit_enviar").click(Editar_product());
 	//Add_product();
-	console.log(index);
+	//console.log(index);
 }); 

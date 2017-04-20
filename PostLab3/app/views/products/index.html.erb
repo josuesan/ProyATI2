@@ -1,51 +1,161 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Products</h1>
+<h1>Los Mejores productos</h1>
 
-<table class="table table-border">
-  <thead>
-    <tr>
-      <th>Foto</th>
-      <th>Nombre</th>
-      <th>Descripcion</th>
-      <th>Categoria</th>
-      <th>Precio</th>
-      <th>Vendido</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  <tbody class="cuerpo">
-
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Product', new_product_path %>
+<div class="container">
+  <div class="row">
+    <div class="form-group">
+      <label>Ordenar por categoria</label>
+      <select onclick="ordenar()" class="form-control">
+        <option value="todo">Todos los productos</option>
+        <option value="camisas">Camisas</option>
+        <option value="pantalones">Pantalones</option>
+        <option value="zapatos">Zapatos</option>
+        <option value="gorras">Gorras</option>
+      </select>
+    </div>   
+  </div>
+  <div class="row feed">
+  </div>
+  <button><%= link_to 'New Product', new_product_path %> </button>  
+</div>
 
 <script type="text/javascript">
 function listar(productos) {  
-  tam = productos.length
+var tam = productos.length ;
+      for (i = 0; i < tam; i++) {
+          var fila = $('<div/>', {
+          'class' : 'col-sm-6 col-md-6 col-lg-4 caja',
+          'id'    : 'Fila_' + i
+        });
 
-  for (i = 0; i < tam; i++) {
-      $(".cuerpo").append("<tr>"); 
-      var txt2 = $("<td></td>").text(productos[i].nombre);  
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(productos[i].precio);
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(productos[i].foto);
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(productos[i].categoria);
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(productos[i].descripcion);
-      $(".cuerpo").append(txt2);
-      var txt2 = $("<td></td>").text(productos[i].vendido);
-      $(".cuerpo").append(txt2);
-      $(".cuerpo").append("<tr>"); 
-  }
+          $(".feed").append(fila);
 
+          var panelTotal = $('<div/>', {
+          'class' : 'panel panel-default panelProduct',
+          'id'    : 'panel-id_' + i
+        });
+
+            $("#Fila_"+i).append(panelTotal);
+
+            var panelHead = $('<div/>', {
+            'class' : 'panel-heading',
+            'id'    : 'panelhead-id_' + i
+        });
+            var panelbody = $('<div/>', {
+            'class' : 'panel-body',
+            'id'    : 'panelbody-id_' + i
+        });
+            var panelfooter = $('<div/>', {
+            'class' : 'panel-footer',
+            'id'    : 'panelfooter-id_' + i
+        });
+
+        $("#panel-id_"+i).append(panelHead);
+        $("#panel-id_"+i).append(panelbody);
+        $("#panel-id_"+i).append(panelfooter);
+
+            panelHead = $("<h4></h4>").text(productos[i].nombre);
+            $("#panelhead-id_"+i).append(panelHead);
+            
+            // agregar imagen al panel body
+            panelbody = $('<img/>', {
+            'class' : 'image',
+            'id'    : 'image_' + i,
+            'src'   : productos[i].foto
+        });
+            $("#panelbody-id_"+i).append(panelbody);
+
+            var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
+            $("#panelfooter-id_"+i).append(precio);
+
+            panelfooter = $('<a/>', {
+            'href'    : '/products/' + productos[i].id
+        });
+        panelfooter.text("Ver mas");
+            $("#panelfooter-id_"+i).append(panelfooter);
+      } 
 };
+
+  function Mostrar_Categoria(productos) {  
+    var tam = productos.length ;
+
+    var categoria = $("select").val();
+    for (i = 0; i < tam; i++) {
+      if (productos[i].categoria==categoria) {
+        var fila = $('<div/>', {
+          'class' : 'col-sm-6 col-md-6 col-lg-4 caja',
+          'id'    : 'Fila_' + i
+        });
+
+          $(".feed").append(fila);
+
+          var panelTotal = $('<div/>', {
+          'class' : 'panel panel-default panelProduct',
+          'id'    : 'panel-id_' + i
+        });
+
+            $("#Fila_"+i).append(panelTotal);
+
+            var panelHead = $('<div/>', {
+            'class' : 'panel-heading',
+            'id'    : 'panelhead-id_' + i
+        });
+            var panelbody = $('<div/>', {
+            'class' : 'panel-body',
+            'id'    : 'panelbody-id_' + i
+        });
+            var panelfooter = $('<div/>', {
+            'class' : 'panel-footer',
+            'id'    : 'panelfooter-id_' + i
+        });
+
+        $("#panel-id_"+i).append(panelHead);
+        $("#panel-id_"+i).append(panelbody);
+        $("#panel-id_"+i).append(panelfooter);
+
+            panelHead = $("<h4></h4>").text(productos[i].nombre);
+            $("#panelhead-id_"+i).append(panelHead);
+            
+            // agregar imagen al panel body
+            panelbody = $('<img/>', {
+            'class' : 'image',
+            'id'    : 'image_' + i,
+            'src'   : productos[i].foto
+        });
+            $("#panelbody-id_"+i).append(panelbody);
+
+            var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
+            $("#panelfooter-id_"+i).append(precio);
+
+            panelfooter = $('<a/>', {
+            'href'    : '/products/' + productos[i].id
+        });
+        panelfooter.text("Ver mas");
+            $("#panelfooter-id_"+i).append(panelfooter);
+      }
+    }
+
+  };
+
+  function ordenar() {  
+    var categoria = $("select").val();
+    if (categoria=="todo") {
+      $(".feed").find(".panelProduct").remove();
+      $(".feed").find(".caja").remove();
+      Get_all_products();
+    }
+    else{
+      $(".feed").find(".panelProduct").remove();
+      $(".feed").find(".caja").remove();
+      Get_all_products_categoria();
+    }
+    
+  };
+
   $(document).ready(function() {
-  listar(Get_all_products());
+  Get_all_products();
+
+
 }); 
 </script>

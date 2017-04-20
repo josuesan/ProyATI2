@@ -1,42 +1,34 @@
 <p id="notice"><%= notice %></p>
+<div class="container">
+  <div class="row">
+    <h1 class="titulo"></h1>
+  </div>
+  <div class="row">
+    <img src="" class="imagen">   
+  </div>
+  <div class="row">
+    <p class="descripcion"></p>  
+  </div>
+  <div class="row">
+  <p class="precio"></p> 
+  </div>
+  <div class="row">
+  <p class="vendido"></p> 
+  </div>
+    <button class="btn btn-default"><%= link_to 'Editar', edit_product_path %></button> 
+    <button class="btn btn-default"><%= link_to 'Regresar', products_path %></button> 
+</div>
 
-<table class="table table-border">
-  <thead>
-    <tr>
-      <th>Foto</th>
-      <th>Nombre</th>
-      <th>Descripcion</th>
-      <th>Categoria</th>
-      <th>Precio</th>
-      <th>Vendido</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  <tbody class="cuerpo">
-
-  </tbody>
-</table>
-
-
-<%= link_to 'Back', products_path %>
 
 <script type="text/javascript">
   function mostrar(producto) {  
 
-        $(".cuerpo").append("<tr>"); 
-        var txt2 = $("<td></td>").text(producto.nombre);  
-        $(".cuerpo").append(txt2);
-        var txt2 = $("<td></td>").text(producto.precio);
-        $(".cuerpo").append(txt2);
-        var txt2 = $("<td></td>").text(producto.foto);
-        $(".cuerpo").append(txt2);
-        var txt2 = $("<td></td>").text(producto.categoria);
-        $(".cuerpo").append(txt2);
-        var txt2 = $("<td></td>").text(producto.descripcion);
-        $(".cuerpo").append(txt2);
-        var txt2 = $("<td></td>").text(producto.vendido);
-        $(".cuerpo").append(txt2);
-        $(".cuerpo").append("<tr>"); 
+        $(".titulo").text(producto.nombre);  
+        $(".imagen").attr('src',producto.foto);
+        $(".descripcion").text(producto.descripcion);
+        $(".precio").text(producto.precio);
+        $(".vendido").text(producto.vendido);
+
 
   };
   function buscarID(){

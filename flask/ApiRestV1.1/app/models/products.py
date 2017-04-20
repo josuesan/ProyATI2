@@ -8,7 +8,7 @@ class productos(db.Model):
 	id = db.Column(db.Integer,primary_key=True)
 	nombre = db.Column(db.String(50),unique=True)
 	precio = db.Column(db.Integer)
-	foto = db.Column(db.String(50))
+	foto = db.Column(db.String(500))
 	descripcion = db.Column(db.String(50))
 	categoria = db.Column(db.String(50))
 	vendido = db.Column(db.Integer)
