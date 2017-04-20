@@ -69,6 +69,7 @@ function sesion_api(){
 			error: function(error) {
 				console.log("hola");
 				var i = false;
+				alert("No has podido registrarte por la api");
 			}
          });
 
