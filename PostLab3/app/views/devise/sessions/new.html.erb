@@ -32,37 +32,3 @@
   </div>
 </div>
 
-<div class="container">
-  <div class="row">
-  <h1>Iniciar Sesion mediante el api</h1>
-    <div class="formulario">
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="form-group col-sm-12 col-md-12 col-lg-12">
-        <%= f.label :email, "Email" %><br />
-        <%= f.email_field :email, autofocus: true , class:"form-control field", required: true%>
-      </div>
-
-      <div class="form-group col-sm-12 col-md-12 col-lg-12">
-        <%= f.label :password, "Contraseña" %><br />
-        <%= f.password_field :password, autocomplete: "off" , class:"form-control field", required: true %>
-      </div>
-
-      <% if devise_mapping.rememberable? -%>
-        <div class="form-group col-sm-12 col-md-12 col-lg-12">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me, "Recordarme" %>
-        </div>
-      <% end %>
-
-      <div class="actions col-sm-12 col-md-12 col-lg-12">
-        <%= f.submit "Ingresar", class:"btn btn-primary" %>
-      </div>
-      <div class="actions col-sm-12 col-md-6 col-lg-6">
-          <%= render "devise/shared/links" %>
-      </div>
-
-    <% end %>
-    </div>      
-  </div>
-</div>
-

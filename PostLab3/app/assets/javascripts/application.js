@@ -16,6 +16,65 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
+function sesion_api(){
+		var x =$("#formulario").serialize();
+		var usuario = $("#usuario").val();
+		var pass = $("#pass").val();
+    $.ajax({
+          url: 'http://localhost:5000/login',
+			crossDomain : "true",
+			async: false, 
+			data: x,
+			type : 'POST',
+            // Adjuntar los campos del formulario enviado.
+           success: function(response)
+           {
+                // Mostrar la respuestas del script PHP.
+               data=JSON.parse(response)
+				if (data.error==false) {
+					console.log(data);
+					//$("#Formulario")[0].reset();
+					limpiaForm($("#formulario"));
+					$.ajax({
+						url: 'http://localhost:5000/datosregistro',
+						crossDomain : "true",
+						async: false, 
+						data: x,
+						type : 'POST',
+						success: function(response) {
+							x=JSON.parse(response)
+							console.log(x)
+							$.ajax({
+								url: '/users/registroapi',
+								async: false, 
+								data: x,
+								type : 'POST',
+								success: function(response) {
+								},
+								error: function(error) {
+								}
+							});
+						},
+						error: function(error) {
+							limpiaForm($("#formulario"));
+							alert("No has podido registrarte por la api");
+						}
+					});
+				}
+				else{
+					limpiaForm($("#formulario"));
+					alert("No has podido registrarte por la api");
+				}
+           },
+			error: function(error) {
+				console.log("hola");
+				var i = false;
+			}
+         });
+
+    	//return i; // Evitar ejecutar el submit del formulario.
+ 	};
+
 function Get_all_products(){
 	
 	$.ajax({

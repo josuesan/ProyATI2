@@ -31,6 +31,16 @@ def log_user():
 		else:
 			respuesta = {'error':True,'mensaje':'Contrasena o Usuario incorrectos'} 
 			return json.dumps(respuesta)
+	return render_template('login.html')
+
+@app.route("/datosregistro", methods = ['GET', 'POST'])
+def registro_datos():
+	if request.method == 'POST':
+		user = Users()
+		usuario = request.form['usuario']
+		clave = request.form['clave']
+		respuesta = user.get_user(usuario)
+		return json.dumps(respuesta)
 	return render_template('login.html') 
         
 
@@ -38,11 +48,15 @@ def log_user():
 def Register():
 	if request.method == 'POST':
 		user = Users()
+		print(request.form['birthdate'])
+		print(request.form['gender'])
 		user.create_user(request.form['username'],
 					request.form['email'],
 					request.form['password'],
 					request.form['name'],
-					request.form['lastname'])
+					request.form['lastname'],
+					request.form['birthdate'],
+					request.form['gender'])
 		db.session.add(user)
 		db.session.commit()
 		if user.exist_user(request.form['username'],request.form['password']):
