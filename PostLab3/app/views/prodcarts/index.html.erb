@@ -1,7 +1,7 @@
-<h1>Carrito de compras</h1>
+<h1 class = "ff-pacifico">Carrito de compras</h1>
 <div class="container">
   <div class="row">
-  	<table class="table table-bordered">
+  	<table class="table table-bordered table_prod">
   		<thead>
   			<th>Imagen</th>
   			<th>Nombre</th>
@@ -9,17 +9,69 @@
   			<th>Cantidad</th>
   			<th>Borrar</th>
   		</thead>
-  		<tbody class="feed">
-  			
+  		<tbody class="feed">  			
   		</tbody>
   	</table>
-  	<button class="btn btn-default">Pagar</button>
+  	<button class="btn btn-primary" data-toggle="modal" data-target="#Checkout" onclick="Calculate()"> Pagar</button>
   </div>
+</div>
+<div class="modal fade" id="Checkout" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class = "ff-pacifico">Introduce tus datos para realizar la compra</h2>
+			</div>
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+					    <label for="Foto">Numero de tarjeta de credito:</label>
+					    <input type="text" class="form-control" id="foto" name="foto">
+					</div>
+					<div class="form-group">
+					    <label for="pwd">Nombre tarjehabitante:</label>
+					    <input type="text" class="form-control" id="nombre" name="nombre">
+					</div>
+					<div class="form-group">
+					    <label for="descripcion">Cedula:</label>
+					    <input type="text" class="form-control" id="descripcion" name="descripcion">
+					</div>
+					<div class="form-group">
+					    <label for="descripcion">Numero de telefono:</label>
+					    <input type="text" class="form-control" id="descripcion" name="descripcion">
+					</div>
+					<div class="form-group">
+					    <label for="descripcion">Direccion de envio:</label>
+					    <input type="text" class="form-control" id="descripcion" name="descripcion">
+					</div>
+				</form>
+				<h3 class = "ff-pacifico">Factura digital</h3>
+					<table class="table table-bordered">
+					  	<thead>
+					  		<th>Nombre del Producto</th>
+					  		<th>Cantidad</th>
+					  		<th>Precio</th>					  			
+					  	</thead>
+					  	<tbody class="products_list">
+					  			
+					  	</tbody>
+					</table>					
+				<strong><p class="ta-right">Su pago total es:</p></strong>
+				<strong><p id="TotalPay" class="ta-right"></p></strong>
+			</div>
+			<div class="modal-footer">
+				<input type="button" class="btn btn-primary" data-dismiss="modal" value="Regresar" onclick="acomodar()">
+				<input type="button" class="btn btn-primary" data-dismiss="modal" value="Pagar" onclick="Pay()">
+			</div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
 	var cant_array = new Array();
 	var id_array = new Array();
+	var precio_array = new Array();
+	var nombre_array = new Array();
 	
+
 	function Get_product_cart(id, indice){
 		$.ajax({
 			url: 'http://localhost:5000/listar/'+id,
@@ -35,9 +87,8 @@
 				else{
 					//console.log(response);
 				 	//console.log(data);   // (o el campo que necesites)	
-				 	incluir( data, indice);			}
-
-
+				 	incluir( data, indice);			
+				}
 			},
 			error: function(error) {}
 		});
@@ -62,14 +113,14 @@
 	          'id'    : 'td_nombre' + i
 	    });
 		$("#Fila_"+i).append(td);
-
+		nombre_array[i]=producto.nombre;
 		$("#td_nombre"+i).append(producto.nombre);
 
 		var td = $('<td/>', {
 	          'id'    : 'td_precio' + i
 	    });
 		$("#Fila_"+i).append(td);
-
+		precio_array[i]=producto.precio;
 		$("#td_precio"+i).append(producto.precio);
 
 		var td = $('<td/>', {
@@ -80,17 +131,19 @@
 		$("#td_cantidad"+i).append(cant_array[i]);
 
 		var bt1 = $('<input/>', {
-			'class'   : 'btn btn-default',
+			'class'   : 'btn btn-primary',
 	          'id'    : 'button+_' + i,
 	          'type'    : 'button',
-	          'value'    : '+'
+	          'value'    : '+',
+	          'onclick' : 'Aument_cart('+i+')'
 	    });
 		$("#td_cantidad"+i).append(bt1);
 		var bt2 = $('<input/>', {
-			'class'   : 'btn btn-default',
+			'class'   : 'btn btn-primary',
 	          'id'    : 'button-_' + i,
 	          'type'    : 'button',
-	          'value'    : '-'
+	          'value'    : '-',
+	          'onclick' : 'Dismi_cart('+i+')'
 	    });
 		$("#td_cantidad"+i).append(bt2);
 
@@ -101,11 +154,11 @@
 		$("#Fila_"+i).append(td);
 
 		var boton = $('<input/>', {
-			'class'   : 'btn btn-default',
+			'class'   : 'btn btn-primary',
 	          'id'    : 'button_' + i,
 	          'type'    : 'button',
-	          'value'    : 'borrar',
-	          'onclick'  : 'borrar('+i+')'
+	          'value'    : 'Borrar',
+	          'onclick'  : 'borrar_cart('+i+')'
 	    });
 		$("#td_borrar"+i).append(boton);
 	};
@@ -117,9 +170,10 @@
 		cant_array[pos]= <%= pro.cant_prod %>;
 		pos++;
   		<% end %>
+  		console.log(cant_array);
 	};
 
-	function borrar(pos){
+	function borrar_cart(pos){
 		var id_prod = id_array[pos];
 		console.log("El id es:"+id_prod);
 		var aux ={"id_prod": id_prod};
@@ -135,15 +189,163 @@
 		});
 	};
 
+	function Aument_cart(pos){
+		var id_prod = id_array[pos];
+		var cant_prod = cant_array[pos] +1;
+		console.log("El id es:"+id_prod);
+
+		var aux ={"id_prod": id_prod ,"cant_prod": cant_prod};
+
+		console.log(aux);
+		$.ajax({
+			url: '/prodcarts/edit',
+			data: aux,
+			type : 'POST',
+
+			success: function(response) {
+				console.log(response);
+			},
+			error: function(error) {}
+		});
+	};
+
+	function Dismi_cart(pos){
+		var id_prod = id_array[pos];
+		var cant_prod = cant_array[pos] -1;
+		var aux ={"id_prod": id_prod ,"cant_prod": cant_prod};
+
+		if (cant_prod == 0) {
+			borrar_cart(id_prod)
+		}
+		else{
+
+			$.ajax({
+			url: '/prodcarts/edit',
+			data: aux,
+			type : 'POST',
+
+			success: function(response) {
+			},
+			error: function(error) {}
+		});
+
+		}
+	};
+	function Calculate(){
+		var total=0;
+		for (var i = 0; i < id_array.length; i++) {
+			total = total +cant_array[i]*precio_array[i];
+		}
+		$('#TotalPay').text(total+"Bsf");
+		Create_fac();
+	};
+	function Create_fac(){
+			for (var i = 0; i < id_array.length; i++) {
+				var fila = $('<tr/>', {
+		        'id'    : 'Fila_products_list' + i
+		    	});
+
+	        	$(".products_list").append(fila);
+
+				var td = $('<td/>', {
+		        'id'    : 'td_list_nombre' + i
+		    	});
+
+		    	$('#Fila_products_list'+i).append(td);
+		    	$("#td_list_nombre"+i).append(nombre_array[i]);
+
+		    	var td = $('<td/>', {
+		        'id'    : 'td_list_cantidad' + i
+		    	});
+
+		    	$('#Fila_products_list'+i).append(td);
+		    	$("#td_list_cantidad"+i).append(cant_array[i]);
+
+		    	var td = $('<td/>', {
+		        'id'    : 'td_list_precio' + i
+		    	});
+
+		    	$('#Fila_products_list'+i).append(td);
+		    	$("#td_list_precio"+i).append(precio_array[i]);
+			}
+	};
+	
+	function Pay(){
+		var indice =0;
+		for (var i = 0; i < id_array.length; i++) {
+			//enviar peticion al api aumentado vendido
+			console.log("pagando");
+			indice =i;
+			Aumentar_vendido(id_array[i],cant_array[i],indice);
+			
+		}
+		
+	};
+
+	function Aumentar_vendido(id, newVendido,indice){
+		//buscar info de ese producto
+		$.ajax({
+			url: 'http://localhost:5000/listar/'+id,
+			contentType: 'application/json',
+			crossDomain : "true",
+			async: false, 
+			type : 'GET',
+			success: function(response) {
+				data=JSON.parse(response)
+				if (data.error==true) {
+
+				}
+				else{
+					//editar vendidos
+					newVendido = newVendido+data.vendido
+					var newproduct="foto="+data.foto+"&nombre="+data.nombre+"&descripcion="+data.descripcion+"&categoria="+data.categoria+"&precio="+data.precio+"&vendido="+newVendido;
+
+					$.ajax({
+						url: 'http://localhost:5000/editar/'+id,
+						crossDomain : "true",
+						async: false, 
+						data: newproduct, 
+						type : 'POST',
+						success: function(response) {
+							data=JSON.parse(response)
+							if (data.error==true) {
+
+							}
+							else{
+								//enviar borrar carrito
+								borrar_cart(indice);
+							}
+						},
+						error: function(error) {}
+					});
+				}
+			},
+			error: function(error) {}
+		});
+	};
+	function acomodar(){
+		$(".products_list").find("tr").remove();
+		$(".products_list").find("td").remove();
+
+	}
 	$(document).ready(function() {
 		var indice= 0;
 		conv(id_array,cant_array);
 
-		for (var j = 0; j < id_array.length; j++) {
-			indice=j;
-			console.log(id_array[j]);
-			Get_product_cart(id_array[j],indice);
+		if(cant_array.length==0){
+			$(".container").empty();
+			$(".modal").empty();
+			$(".container").remove();
+			$(".modal").remove();
 		}
+		else{
+			for (var j = 0; j < id_array.length; j++) {
+				indice=j;
+				console.log(id_array[j]);
+				Get_product_cart(id_array[j],indice);
+			}	
+		}
+		
 		
 	}); 
 </script>

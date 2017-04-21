@@ -1,30 +1,30 @@
 <h1 class = "ff-pacifico">Editar Producto</h1>
 <div class="container">
   <div class="row">
-    <form  id="formulario">
-      <div class="form-group ">
+    <form  class="formulario" id="formulario">
+      <div class="form-group col-sm-12 col-md-12 col-lg-12">
         <label for="Foto">Foto:</label>
-        <input type="text" class="form-control" id="foto" name="foto" required>
+        <input type="text" class="form-control field" id="foto" name="foto" required>
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-12 col-md-12 col-lg-12">
         <label for="pwd">Nombre:</label>
-        <input type="text" class="form-control" id="nombre" name="nombre" required>
+        <input type="text" class="form-control field" id="nombre" name="nombre" required>
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-12 col-md-12 col-lg-12">
         <label for="descripcion">Descripción:</label>
-        <input type="text" class="form-control" id="descripcion" name="descripcion" required>
+        <input type="text" class="form-control field" id="descripcion" name="descripcion" required>
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-12 col-md-12 col-lg-12">
         <label for="categoria">Categoria:</label>
-        <input type="text" class="form-control" id="categoria" name="categoria" required>
+        <input type="text" class="form-control field" id="categoria" name="categoria" required>
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-12 col-md-12 col-lg-12">
         <label for="precio">Precio</label>
-        <input type="text" class="form-control" id="precio" name="precio" required>
+        <input type="text" class="form-control field" id="precio" name="precio" required>
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-12 col-md-12 col-lg-12">
         <label for="vendido">Vendido:</label>
-        <input type="text" class="form-control" id="vendido" name="vendido" required>
+        <input type="text" class="form-control field" id="vendido" name="vendido" required>
       </div>
       <button type="submit" class="btn btn-primary" id="btn_edit_enviar">Enviar</button>
       <%= link_to 'Regresar', products_path, class:"btn btn-primary" %>

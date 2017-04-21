@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'prodcarts/index'
   post 'prodcarts/add' => 'prodcarts#add'
   post 'prodcarts/delete' => 'prodcarts#delete'
-  #post 'prodcarts/edit' => 'prodcarts#edit'
+  post 'prodcarts/edit' => 'prodcarts#edit'
 
   resources :products
   devise_for :users

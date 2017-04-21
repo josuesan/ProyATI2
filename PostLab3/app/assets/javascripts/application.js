@@ -234,6 +234,7 @@ function Add_product(){
 					if (data.id==id) {
 						//console.log(data);
 						alertify.success("Producto editado.");
+						
 					}
 					else{
 						limpiaForm($("#formulario"));
