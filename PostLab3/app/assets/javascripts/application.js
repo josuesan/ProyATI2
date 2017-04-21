@@ -94,6 +94,8 @@ function Get_all_products(){
 	});
 };
 
+
+
 function Get_all_products_categoria(){
 	
 	$.ajax({
@@ -278,6 +280,20 @@ function limpiaForm(miForm) {
 	});
 };
 
+function Add_to_cart(){
+	 var id_prod = buscarID();
+	 var aux ={"id_prod": id_prod};
+	 console.log("hola");
+	$.ajax({
+		url: '/prodcarts/add',
+		data: aux,
+		type : 'POST',
+		success: function(response) {
+
+		},
+		error: function(error) {}
+	});
+};
 
 $(document).ready(function(){
 	//var index = 0;
@@ -287,6 +303,12 @@ $(document).ready(function(){
 	//$("#btn_edit_enviar").click(Editar_product());
 	//Add_product();
 	//console.log(index);
+	/*var id_prod = buscarID();
+	var x ={"id_prod": id_prod};
+	console.log(x);*/
+	/*var aux = JSON.parse({"id_prod": id_prod});
+	console.log(aux);*/
+
 }); 
 
 

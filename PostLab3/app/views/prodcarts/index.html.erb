@@ -1,2 +1,149 @@
-<h1>Prodcarts#index</h1>
-<p>Find me in app/views/prodcarts/index.html.erb</p>
+<h1>Carrito de compras</h1>
+<div class="container">
+  <div class="row">
+  	<table class="table table-bordered">
+  		<thead>
+  			<th>Imagen</th>
+  			<th>Nombre</th>
+  			<th>Precio</th>
+  			<th>Cantidad</th>
+  			<th>Borrar</th>
+  		</thead>
+  		<tbody class="feed">
+  			
+  		</tbody>
+  	</table>
+  	<button class="btn btn-default">Pagar</button>
+  </div>
+</div>
+<script type="text/javascript">
+	var cant_array = new Array();
+	var id_array = new Array();
+	
+	function Get_product_cart(id, indice){
+		$.ajax({
+			url: 'http://localhost:5000/listar/'+id,
+			contentType: 'application/json',
+			crossDomain : "true",
+			async: false, 
+			type : 'GET',
+			success: function(response) {
+				data=JSON.parse(response)
+				if (data.error==true) {
+					//console.log("error");
+				}
+				else{
+					//console.log(response);
+				 	//console.log(data);   // (o el campo que necesites)	
+				 	incluir( data, indice);			}
+
+
+			},
+			error: function(error) {}
+		});
+	};
+
+	function incluir(producto,i){
+		console.log(producto);
+		var fila = $('<tr/>', {
+	        'id'    : 'Fila_' + i
+	    });
+
+        $(".feed").append(fila);
+        var td = $('<td/>', {
+	          'id'    : 'td_imagen' + i
+	    });
+		$("#Fila_"+i).append(td);	
+		var img = $('<img/>', {
+	          'src'    : producto.foto
+	    });
+	    $("#td_imagen"+i).append(img);
+	    var td = $('<td/>', {
+	          'id'    : 'td_nombre' + i
+	    });
+		$("#Fila_"+i).append(td);
+
+		$("#td_nombre"+i).append(producto.nombre);
+
+		var td = $('<td/>', {
+	          'id'    : 'td_precio' + i
+	    });
+		$("#Fila_"+i).append(td);
+
+		$("#td_precio"+i).append(producto.precio);
+
+		var td = $('<td/>', {
+	          'id'    : 'td_cantidad' + i
+	    });
+		$("#Fila_"+i).append(td);
+
+		$("#td_cantidad"+i).append(cant_array[i]);
+
+		var bt1 = $('<input/>', {
+			'class'   : 'btn btn-default',
+	          'id'    : 'button+_' + i,
+	          'type'    : 'button',
+	          'value'    : '+'
+	    });
+		$("#td_cantidad"+i).append(bt1);
+		var bt2 = $('<input/>', {
+			'class'   : 'btn btn-default',
+	          'id'    : 'button-_' + i,
+	          'type'    : 'button',
+	          'value'    : '-'
+	    });
+		$("#td_cantidad"+i).append(bt2);
+
+
+		var td = $('<td/>', {
+	          'id'    : 'td_borrar' + i
+	    });
+		$("#Fila_"+i).append(td);
+
+		var boton = $('<input/>', {
+			'class'   : 'btn btn-default',
+	          'id'    : 'button_' + i,
+	          'type'    : 'button',
+	          'value'    : 'borrar',
+	          'onclick'  : 'borrar('+i+')'
+	    });
+		$("#td_borrar"+i).append(boton);
+	};
+
+	function conv(id_array,cant_array){
+		var pos=0;
+		<% @prods.each do |pro| %>
+		id_array[pos]= <%= pro.id_prod %>;
+		cant_array[pos]= <%= pro.cant_prod %>;
+		pos++;
+  		<% end %>
+	};
+
+	function borrar(pos){
+		var id_prod = id_array[pos];
+		console.log("El id es:"+id_prod);
+		var aux ={"id_prod": id_prod};
+		console.log(aux);
+		$.ajax({
+			url: '/prodcarts/delete',
+			data: aux,
+			type : 'POST',
+
+			success: function(response) {
+			},
+			error: function(error) {}
+		});
+	};
+
+	$(document).ready(function() {
+		var indice= 0;
+		conv(id_array,cant_array);
+
+		for (var j = 0; j < id_array.length; j++) {
+			indice=j;
+			console.log(id_array[j]);
+			Get_product_cart(id_array[j],indice);
+		}
+		
+	}); 
+</script>

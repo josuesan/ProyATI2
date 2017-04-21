@@ -19,17 +19,19 @@
     <p class="vendido"></p> 
     </div>
     <div class ="row">
-      <%= link_to 'Editar', edit_product_path, class:"btn btn-primary"%>
-      <%= link_to 'Regresar', products_path, class:"btn btn-primary" %> 
+      <button class="btn btn-primary" onclick="Add_to_cart()"> Agregar a carrito</button> 
+      <%= link_to 'Editar', edit_product_path, class:"btn btn-primary" %>  
+       <%= link_to 'Borrar', products_path, :onclick => 'Delete_product(buscarID())', class:"btn btn-primary" %>
+      <%= link_to 'Regresar', products_path, class:"btn btn-primary" %>
     </div>
   </div> 
 </div>
 
-
 <script type="text/javascript">
   function mostrar(producto) {  
 
-        $(".titulo").text(producto.nombre);  
+        $(".titulo").text(producto.nombre); 
+        $(".titulo").attr('id',producto.id);  
         $(".imagen").attr('src',producto.foto);
         $(".descripcion").text(producto.descripcion);
         $(".precio").text(producto.precio);
