@@ -15,15 +15,18 @@
   <div class="row">
   <p class="vendido"></p> 
   </div>
+    <button class="btn btn-default" onclick="Add_to_cart()"> Agregar a carrito</button> 
     <button class="btn btn-default"><%= link_to 'Editar', edit_product_path %></button> 
     <button class="btn btn-default"><%= link_to 'Regresar', products_path %></button> 
+    <button class="btn btn-default" onclick="Delete_product(buscarID())"><%= link_to 'Borrar', products_path %></button> 
 </div>
 
 
 <script type="text/javascript">
   function mostrar(producto) {  
 
-        $(".titulo").text(producto.nombre);  
+        $(".titulo").text(producto.nombre); 
+        $(".titulo").attr('id',producto.id);  
         $(".imagen").attr('src',producto.foto);
         $(".descripcion").text(producto.descripcion);
         $(".precio").text(producto.precio);
