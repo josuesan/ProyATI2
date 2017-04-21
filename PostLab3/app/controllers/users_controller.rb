@@ -18,5 +18,21 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def perfil
+    if !user_signed_in?
+      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+    end
+    #@usuario = User.find(:email => 'josejse@gmail.com')
+  end
+
+  def editar_perfil
+    if !user_signed_in?
+      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+    else
+      redirect_to edit_user_registration_path
+    end
+  end
+
     #@products = Product.all
 end

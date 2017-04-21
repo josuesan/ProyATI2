@@ -1,0 +1,30 @@
+<h1 class = "ff-pacifico">Sección de comentarios</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="table-responsive">
+      <table class="table  table-bordered">
+        <thead>
+          <th>Nombre</th>
+          <th>Descripción</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @comments.each do |comment| %>
+          <tr>
+            <td><%= comment.nombre %></td>
+            <td><%= comment.descripcion %></td>
+            <td><%= link_to 'Ver', comment , class:"btn btn-default"%></td>
+            <% if current_user.id == comment.user_id %>
+              <td><%= link_to 'Editar', edit_comment_path(comment), class:"btn btn-default" %></td>
+              <td><%= link_to 'Eliminar', comment, method: :delete, data: { confirm: '¿Estás seguro?' }, class:"btn btn-default" %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+<br>
+
+<%= link_to 'Crear comentario', new_comment_path, class:"btn btn-primary" %>

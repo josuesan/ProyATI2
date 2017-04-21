@@ -1,7 +1,14 @@
-<h1>¡ Bienvenido a 3J' STORE !</h1>
+
 <% if user_signed_in? %>
-	<h2>Bienvenido <%= current_user.nombre %> </h2>
+	<% if current_user.genero == 'M' %>
+		<h1 class = "ff-pacifico"> ¡ Bienvenido a 3J' STORE  <%= current_user.nombre %> ! </h1>
+	<% else %>
+		<h1 class = "ff-pacifico"> ¡ Bienvenida a 3J' STORE <%= current_user.nombre %> ! </h1>
+	<% end %>
+<% else %>
+	<h1 class = "ff-pacifico">¡ Bienvenid@ a 3J' STORE !</h1>
 <%end%>
+
 <div class="container">
 	<div class="row destacado">
 	</div>

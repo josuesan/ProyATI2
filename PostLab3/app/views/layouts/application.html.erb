@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PostLab3</title>
+    <title>Fase 2 - Proyecto ATI 2</title>
     <%= csrf_meta_tags %>
 
+    <link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+    
   </head>
 
   <body>
@@ -13,7 +17,7 @@
     <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">3J' STORE</a>
+        <a class="navbar-brand ff-pacifico" href="/">3J' STORE</a>
       </div>
       <ul class="nav navbar-nav">
         <li class="">
@@ -26,10 +30,13 @@
       <ul class="nav navbar-nav navbar-right">
         <% if user_signed_in? %>
             <li>
-              <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %>
+              <%= link_to "Perfil", '/perfil'%>
             </li>
             <li>
               <%= link_to "Carrito", prodcarts_index_path %>
+            </li>
+            <li>
+              <%= link_to "Cerrar sesión", destroy_user_session_path, method: :delete %>
             </li>
           <% else %>
             <li>
@@ -42,6 +49,7 @@
               <%= link_to "Registrarse por API", '/registro_api' %>
             </li>
           <% end %>
+
       </ul>
     </div>
   </nav>
@@ -50,4 +58,5 @@
       <p class="alert text-center"><%= alert %></p>
     <%= yield %> 
   </body>
+
 </html>

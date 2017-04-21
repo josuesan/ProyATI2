@@ -7,4 +7,5 @@ class WelcomeController < ApplicationController
   		redirect_to '/', notice: 'Ya iniciaste sesión.'
   	end
   end
+
 end
