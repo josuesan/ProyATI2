@@ -5,13 +5,15 @@
 <div class="container">
   <div class="row">
     <div class="form-group">
-      <label>Ordenar por categoria</label>
+      <label>Ordenar por:</label>
       <select onclick="ordenar()" class="form-control">
         <option value="todo">Todos los productos</option>
         <option value="Camisas">Camisas</option>
         <option value="Pantalones">Pantalones</option>
         <option value="Zapatos">Zapatos</option>
         <option value="Gorras">Gorras</option>
+        <option value="Nombre">Nombre</option>
+        <option value="Precio">Precio</option>
       </select>
     </div>   
   </div>
@@ -25,121 +27,248 @@
 </div>
 
 <script type="text/javascript">
-function listar(productos) {  
-  var tam = productos.length ;
-      for (i = 0; i < tam; i++) {
-          var fila = $('<div/>', {
-          'class' : 'col-sm-6 col-md-6 col-lg-4 caja',
-          'id'    : 'Fila_' + i
-        });
+  function compareStrings(a, b) {
+    // Assuming you want case-insensitive comparison
+    a = a.toLowerCase();
+    b = b.toLowerCase();
+    return (a < b) ? -1 : (a > b) ? 1 : 0;
+  };
+  function SortByPrecio(x,y) {
+    return x.precio - y.precio; 
+  };
 
-          $(".feed").append(fila);
+  function listar(productos) {  
+    var tam = productos.length ;
+        for (i = 0; i < tam; i++) {
+            var fila = $('<div/>', {
+            'class' : 'col-sm-6 col-md-6 col-lg-4 caja',
+            'id'    : 'Fila_' + i
+          });
 
-          var panelTotal = $('<div/>', {
-          'class' : 'panel panel-default panelProduct',
-          'id'    : 'panel-id_' + i
-        });
+            $(".feed").append(fila);
 
-            $("#Fila_"+i).append(panelTotal);
+            var panelTotal = $('<div/>', {
+            'class' : 'panel panel-default panelProduct',
+            'id'    : 'panel-id_' + i
+          });
 
-            var panelHead = $('<div/>', {
-            'class' : 'panel-heading',
-            'id'    : 'panelhead-id_' + i
-        });
-            var panelbody = $('<div/>', {
-            'class' : 'panel-body',
-            'id'    : 'panelbody-id_' + i
-        });
-            var panelfooter = $('<div/>', {
-            'class' : 'panel-footer',
-            'id'    : 'panelfooter-id_' + i
-        });
+              $("#Fila_"+i).append(panelTotal);
 
-        $("#panel-id_"+i).append(panelHead);
-        $("#panel-id_"+i).append(panelbody);
-        $("#panel-id_"+i).append(panelfooter);
+              var panelHead = $('<div/>', {
+              'class' : 'panel-heading',
+              'id'    : 'panelhead-id_' + i
+          });
+              var panelbody = $('<div/>', {
+              'class' : 'panel-body',
+              'id'    : 'panelbody-id_' + i
+          });
+              var panelfooter = $('<div/>', {
+              'class' : 'panel-footer',
+              'id'    : 'panelfooter-id_' + i
+          });
 
-            panelHead = $("<h4></h4>").text(productos[i].nombre);
-            $("#panelhead-id_"+i).append(panelHead);
-            
-            // agregar imagen al panel body
-            panelbody = $('<img/>', {
-            'class' : 'image',
-            'id'    : 'image_' + i,
-            'src'   : productos[i].foto
-        });
-            $("#panelbody-id_"+i).append(panelbody);
+          $("#panel-id_"+i).append(panelHead);
+          $("#panel-id_"+i).append(panelbody);
+          $("#panel-id_"+i).append(panelfooter);
 
-            var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
-            $("#panelfooter-id_"+i).append(precio);
+              panelHead = $("<h4></h4>").text(productos[i].nombre);
+              $("#panelhead-id_"+i).append(panelHead);
+              
+              // agregar imagen al panel body
+              panelbody = $('<img/>', {
+              'class' : 'image',
+              'id'    : 'image_' + i,
+              'src'   : productos[i].foto
+          });
+              $("#panelbody-id_"+i).append(panelbody);
 
-            panelfooter = $('<a/>', {
-            'href'    : '/products/' + productos[i].id
-        });
-        panelfooter.text("Ver mas");
-            $("#panelfooter-id_"+i).append(panelfooter);
-      } 
-};
+              var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
+              $("#panelfooter-id_"+i).append(precio);
+
+              panelfooter = $('<a/>', {
+              'href'    : '/products/' + productos[i].id
+          });
+          panelfooter.text("Ver mas");
+              $("#panelfooter-id_"+i).append(panelfooter);
+        } 
+  };
 
   function Mostrar_Categoria(productos) {  
     var tam = productos.length ;
-
+    console.log(productos);
     var categoria = $("select").val();
-    for (i = 0; i < tam; i++) {
-      if (productos[i].categoria==categoria) {
+    if (categoria=="Camisas" || categoria=="Pantalones" || categoria=="Zapatos" || categoria=="Gorras") {
+
+      for (i = 0; i < tam; i++) {
+        if (productos[i].categoria==categoria) {
+          var fila = $('<div/>', {
+            'class' : 'col-sm-6 col-md-6 col-lg-4 caja',
+            'id'    : 'Fila_' + i
+          });
+
+            $(".feed").append(fila);
+
+            var panelTotal = $('<div/>', {
+            'class' : 'panel panel-default panelProduct',
+            'id'    : 'panel-id_' + i
+          });
+
+              $("#Fila_"+i).append(panelTotal);
+
+              var panelHead = $('<div/>', {
+              'class' : 'panel-heading',
+              'id'    : 'panelhead-id_' + i
+          });
+              var panelbody = $('<div/>', {
+              'class' : 'panel-body',
+              'id'    : 'panelbody-id_' + i
+          });
+              var panelfooter = $('<div/>', {
+              'class' : 'panel-footer',
+              'id'    : 'panelfooter-id_' + i
+          });
+
+          $("#panel-id_"+i).append(panelHead);
+          $("#panel-id_"+i).append(panelbody);
+          $("#panel-id_"+i).append(panelfooter);
+
+              panelHead = $("<h4></h4>").text(productos[i].nombre);
+              $("#panelhead-id_"+i).append(panelHead);
+              
+              // agregar imagen al panel body
+              panelbody = $('<img/>', {
+              'class' : 'image',
+              'id'    : 'image_' + i,
+              'src'   : productos[i].foto
+          });
+              $("#panelbody-id_"+i).append(panelbody);
+
+              var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
+              $("#panelfooter-id_"+i).append(precio);
+
+              panelfooter = $('<a/>', {
+              'href'    : '/products/' + productos[i].id
+          });
+          panelfooter.text("Ver mas");
+              $("#panelfooter-id_"+i).append(panelfooter);
+        }
+      }
+
+    }
+    else if (categoria=="Nombre" ){
+      //ordenar por nombre     
+      productos.sort(function(a, b) {
+        return compareStrings(a.nombre, b.nombre);
+      })
+      for (i = 0; i < tam; i++) {
         var fila = $('<div/>', {
           'class' : 'col-sm-6 col-md-6 col-lg-4 caja',
           'id'    : 'Fila_' + i
         });
 
-          $(".feed").append(fila);
+        $(".feed").append(fila);
 
-          var panelTotal = $('<div/>', {
+        var panelTotal = $('<div/>', {
           'class' : 'panel panel-default panelProduct',
           'id'    : 'panel-id_' + i
         });
 
-            $("#Fila_"+i).append(panelTotal);
+        $("#Fila_"+i).append(panelTotal);
 
-            var panelHead = $('<div/>', {
-            'class' : 'panel-heading',
-            'id'    : 'panelhead-id_' + i
+        var panelHead = $('<div/>', {
+          'class' : 'panel-heading',
+          'id'    : 'panelhead-id_' + i
         });
-            var panelbody = $('<div/>', {
-            'class' : 'panel-body',
-            'id'    : 'panelbody-id_' + i
+        var panelbody = $('<div/>', {
+          'class' : 'panel-body',
+          'id'    : 'panelbody-id_' + i
         });
-            var panelfooter = $('<div/>', {
-            'class' : 'panel-footer',
-            'id'    : 'panelfooter-id_' + i
+        var panelfooter = $('<div/>', {
+          'class' : 'panel-footer',
+          'id'    : 'panelfooter-id_' + i
         });
 
         $("#panel-id_"+i).append(panelHead);
         $("#panel-id_"+i).append(panelbody);
         $("#panel-id_"+i).append(panelfooter);
 
-            panelHead = $("<h4></h4>").text(productos[i].nombre);
-            $("#panelhead-id_"+i).append(panelHead);
-            
-            // agregar imagen al panel body
-            panelbody = $('<img/>', {
-            'class' : 'image',
-            'id'    : 'image_' + i,
-            'src'   : productos[i].foto
+        panelHead = $("<h4></h4>").text(productos[i].nombre);
+        $("#panelhead-id_"+i).append(panelHead);
+              
+        // agregar imagen al panel body
+        panelbody = $('<img/>', {
+          'class' : 'image',
+          'id'    : 'image_' + i,
+          'src'   : productos[i].foto
         });
-            $("#panelbody-id_"+i).append(panelbody);
+        $("#panelbody-id_"+i).append(panelbody);
 
-            var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
-            $("#panelfooter-id_"+i).append(precio);
+        var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
+        $("#panelfooter-id_"+i).append(precio);
 
-            panelfooter = $('<a/>', {
-            'href'    : '/products/' + productos[i].id
+        panelfooter = $('<a/>', {
+          'href'    : '/products/' + productos[i].id
         });
         panelfooter.text("Ver mas");
-            $("#panelfooter-id_"+i).append(panelfooter);
+        $("#panelfooter-id_"+i).append(panelfooter);
       }
     }
+    else{
+      productos.sort(SortByPrecio);
+      console.log(productos);
+      for (i = 0; i < tam; i++) {
+        var fila = $('<div/>', {
+          'class' : 'col-sm-6 col-md-6 col-lg-4 caja',
+          'id'    : 'Fila_' + i
+        });
 
+        $(".feed").append(fila);
+
+        var panelTotal = $('<div/>', {
+          'class' : 'panel panel-default panelProduct',
+          'id'    : 'panel-id_' + i
+        });
+
+        $("#Fila_"+i).append(panelTotal);
+
+        var panelHead = $('<div/>', {
+          'class' : 'panel-heading',
+          'id'    : 'panelhead-id_' + i
+        });
+        var panelbody = $('<div/>', {
+          'class' : 'panel-body',
+          'id'    : 'panelbody-id_' + i
+        });
+        var panelfooter = $('<div/>', {
+          'class' : 'panel-footer',
+          'id'    : 'panelfooter-id_' + i
+        });
+
+        $("#panel-id_"+i).append(panelHead);
+        $("#panel-id_"+i).append(panelbody);
+        $("#panel-id_"+i).append(panelfooter);
+
+        panelHead = $("<h4></h4>").text(productos[i].nombre);
+        $("#panelhead-id_"+i).append(panelHead);
+              
+        // agregar imagen al panel body
+        panelbody = $('<img/>', {
+          'class' : 'image',
+          'id'    : 'image_' + i,
+          'src'   : productos[i].foto
+        });
+        $("#panelbody-id_"+i).append(panelbody);
+
+        var precio = $("<p></p>").text("Precio: "+productos[i].precio+"BsF");
+        $("#panelfooter-id_"+i).append(precio);
+
+        panelfooter = $('<a/>', {
+          'href'    : '/products/' + productos[i].id
+        });
+        panelfooter.text("Ver mas");
+        $("#panelfooter-id_"+i).append(panelfooter);
+      }
+    }
   };
 
   function ordenar() {  
@@ -158,8 +287,6 @@ function listar(productos) {
   };
 
   $(document).ready(function() {
-  Get_all_products();
-
-
-}); 
+    Get_all_products();
+  }); 
 </script>
