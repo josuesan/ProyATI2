@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
     else
       respond_to do |format|
-        format.html { redirect_to '/registro_api', notice: @usuario.errors.full_messages.to_sentence }
+        format.html { redirect_to '/registro_api', alert: @usuario.errors.full_messages.to_sentence }
         format.json { render json: { :error => 'true', :desc => @usuario.errors.full_messages} }
       end
     end
@@ -21,14 +21,14 @@ class UsersController < ApplicationController
 
   def perfil
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     end
     #@usuario = User.find(:email => 'josejse@gmail.com')
   end
 
   def editar_perfil
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     else
       redirect_to edit_user_registration_path
     end

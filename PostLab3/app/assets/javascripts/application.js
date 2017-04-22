@@ -211,6 +211,7 @@ function Add_product(){
            },
 			error: function(error) {
 				//console.log("hola");
+				alertify.error("No se ha podido agregar el producto, vuelvalo a intentar.");
 				var i = false;
 			}
          });
@@ -297,6 +298,7 @@ function Add_to_cart(){
 };
 
 $(document).ready(function(){
+	$("#notice_wrapper").fadeIn("slow").delay(2000).fadeOut("slow");
 	//var index = 0;
 	///Get_all_products();
 	//Get_product(5);

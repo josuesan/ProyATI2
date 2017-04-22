@@ -13,6 +13,26 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+#notice_wrapper {
+  display: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  .alert { background: rgba(254,26,0,.9); }
+  .notice{ background: rgba(92,184,17,.9); }
+  .alert, .notice {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;    
+    padding: 35px 0;
+    text-align: center;  
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  }
+}
+
 h1{
 	text-align: center;
 }
@@ -97,7 +117,7 @@ body{
  */
 .alertify,
 .alertify-log {
-	font-family: 'Indie Flower', sans-serif;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 .alertify {
 	background: #FFF;

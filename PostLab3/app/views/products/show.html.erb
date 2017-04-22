@@ -19,9 +19,13 @@
     <p class="vendido"></p> 
     </div>
     <div class ="row">
-      <button class="btn btn-primary" onclick="Add_to_cart()"> Agregar a carrito</button> 
-      <%= link_to 'Editar', edit_product_path, class:"btn btn-primary" %>  
-       <%= link_to 'Borrar', products_path, :onclick => 'Delete_product(buscarID())', class:"btn btn-primary" %>
+      <% if user_signed_in? %>
+        <button class="btn btn-primary" onclick="Add_to_cart()"> Agregar a carrito</button> 
+        <% if current_user.username == 'admin' %>
+          <%= link_to 'Editar', edit_product_path, class:"btn btn-primary" %>  
+          <%= link_to 'Borrar', products_path, :onclick => 'Delete_product(buscarID())', class:"btn btn-primary" %>
+        <% end %>
+      <% end %>
       <%= link_to 'Regresar', products_path, class:"btn btn-primary" %>
     </div>
   </div> 

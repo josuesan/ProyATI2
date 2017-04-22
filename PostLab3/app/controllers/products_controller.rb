@@ -23,17 +23,38 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
+    if !user_signed_in?
+        redirect_to '/' , alert: 'Acceso denegado.'
+    else
+      if current_user.username != 'admin'
+        redirect_to '/' , alert: 'Acceso denegado.'
+      end
+    end
     #@product = Product.new
   end
 
 
   # GET /products/1/edit
   def edit
+    if !user_signed_in?
+        redirect_to '/' , alert: 'Acceso denegado.'
+    else
+      if current_user.username != 'admin'
+        redirect_to '/' , alert: 'Acceso denegado.'
+      end
+    end
   end
 
   # POST /products
   # POST /products.json
   def create
+    if !user_signed_in?
+        redirect_to '/' , alert: 'Acceso denegado.'
+    else
+      if current_user.username != 'admin'
+        redirect_to '/' , alert: 'Acceso denegado.'
+      end
+    end
     #@product = Product.new(product_params)
 
     #respond_to do |format|
@@ -50,6 +71,13 @@ class ProductsController < ApplicationController
   # PATCH/PUT /products/1
   # PATCH/PUT /products/1.json
   def update
+    if !user_signed_in?
+        redirect_to '/' , alert: 'Acceso denegado.'
+    else
+      if current_user.username != 'admin'
+        redirect_to '/' , alert: 'Acceso denegado.'
+      end
+    end
     respond_to do |format|
       if @product.update(product_params)
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
@@ -64,6 +92,13 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
+    if !user_signed_in?
+        redirect_to '/' , alert: 'Acceso denegado.'
+    else
+      if current_user.username != 'admin'
+        redirect_to '/' , alert: 'Acceso denegado.'
+      end
+    end
     @product.destroy
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }

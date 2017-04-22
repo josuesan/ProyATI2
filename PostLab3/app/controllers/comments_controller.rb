@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
   # GET /comments.json
   def index
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     end
     @comments = Comment.all
   end
@@ -14,14 +14,14 @@ class CommentsController < ApplicationController
   # GET /comments/1.json
   def show
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     end
   end
 
   # GET /comments/new
   def new
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     end
     @comment = Comment.new
   end
@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
   # GET /comments/1/edit
   def edit
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     else
       if @comment.user_id != current_user.id
         redirect_to '/comments'
@@ -41,13 +41,13 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     end
     @comment = Comment.new(comment_params)
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to @comment, notice: 'El comentario se ha creado correctamente.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -60,7 +60,7 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1.json
   def update
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     else
       if @comment.user_id != current_user.id
         redirect_to '/comments'
@@ -68,7 +68,7 @@ class CommentsController < ApplicationController
     end
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to @comment, notice: 'Comentario editado correctamente.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -81,7 +81,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     else
       if @comment.user_id != current_user.id
         redirect_to '/comments'
@@ -89,7 +89,7 @@ class CommentsController < ApplicationController
     end
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to comments_url, notice: 'Comentario eliminado correctamente.' }
       format.json { head :no_content }
     end
   end

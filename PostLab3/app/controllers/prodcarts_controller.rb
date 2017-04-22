@@ -1,7 +1,7 @@
 class ProdcartsController < ApplicationController
   def index
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     else
       x = Prodcart.where(username: current_user.username)
       contador = Prodcart.where(username: current_user.username).count()
@@ -14,7 +14,7 @@ class ProdcartsController < ApplicationController
  
   def add
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     else
       @prod_to_cart = Prodcart.new(:username => current_user.username, :id_prod => params[:id_prod], :cant_prod => 1)
       if @prod_to_cart.save
@@ -25,7 +25,7 @@ class ProdcartsController < ApplicationController
 
       else
         respond_to do |format|
-          format.html { redirect_to products_path, notice: @usuario.errors.full_messages.to_sentence }
+          format.html { redirect_to products_path, alert: @usuario.errors.full_messages.to_sentence }
           format.json { render json: { :error => 'true', :desc => @usuario.errors.full_messages} }
         end
       end
@@ -34,7 +34,7 @@ class ProdcartsController < ApplicationController
 
   def delete
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     else
       @x = Prodcart.find_by(username: current_user.username, id_prod: params[:id_prod])
       @x.destroy
@@ -48,7 +48,7 @@ class ProdcartsController < ApplicationController
   
   def edit
     if !user_signed_in?
-      redirect_to new_user_session_path , notice: 'No has iniciado sesión.'
+      redirect_to new_user_session_path , alert: 'No has iniciado sesión.'
     else
       producto = Prodcart.find_by(username: current_user.username, id_prod: params[:id_prod])
       producto.cant_prod = params[:cant_prod]
